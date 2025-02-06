@@ -13,19 +13,6 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>kafka-producer</name>
     <description>kafka-producer</description>
-    <url/>
-    <licenses>
-        <license/>
-    </licenses>
-    <developers>
-        <developer/>
-    </developers>
-    <scm>
-        <connection/>
-        <developerConnection/>
-        <tag/>
-        <url/>
-    </scm>
     <properties>
         <java.version>17</java.version>
     </properties>
@@ -49,6 +36,7 @@
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>2.7.0</version>
         </dependency>
+        <!--        swagger url available at http://localhost:8080/swagger-ui.html-->
 
 
         <dependency>
@@ -109,14 +97,7 @@
                         <configuration>
                             <images>
                                 <image>
-                                    <!-- Nomenclature of placeholder
-                                                %g=The last part of the Maven group name corresponds to medium here
-                                                %v=The project version. Synonym to ${project.version}
-                                              ....................................... -->
-                                    <name>%g/kafka-producer:%v</name>
-                                    <!-- ....................................... -->
-                                    <!-- Build configuration for creating images -->
-                                    <!-- ....................................... -->
+                                    <name>kafka/kafka-producer:${project.version}</name>
                                     <build>
                                         <dockerFile>Dockerfile</dockerFile>
                                         <assembly>
@@ -186,10 +167,6 @@
                                     <name>kafka/kafka-producer:${project.version}</name>
                                     <run>
                                         <network>kafka-network</network>
-                                        <ports>
-                                            <port>8080:8080</port>
-                                            <!-- Adjust if needed -->
-                                        </ports>
                                         <env>
                                             <KAFKA_BOOTSTRAP_SERVERS>kafkabroker1:9092, kafkabroker2:9093,
                                                 kafkabroker3:9094
