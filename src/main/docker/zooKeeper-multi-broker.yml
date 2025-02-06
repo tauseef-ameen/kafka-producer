@@ -1,4 +1,3 @@
-version: '1.0'
 
 services:
   zoo1:
@@ -68,46 +67,3 @@ services:
       KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
     depends_on:
       - zoo1
-
-
-        kafkabroker2:
-          image: confluentinc/cp-kafka:7.4.1
-          platform: linux/amd64
-          hostname: kafkabroker2
-          container_name: kafkabroker2
-          ports:
-            - "9093:9093"
-          environment:
-            KAFKA_PROCESS_ROLES: broker,controller
-            KAFKA_NODE_ID: 2
-            KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafkabroker1:9093,2@kafkabroker2:9093,3@kafkabroker3:9093
-            KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9093,CONTROLLER://0.0.0.0:9094
-            KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafkabroker2:9093
-            KAFKA_LOG_DIRS: /var/lib/kafka/data
-            KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
-            KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 3
-            KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 2
-            CLUSTER_ID: D1QB5MB8QLml357eGLuJNg
-            KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT
-            KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
-
-        kafkabroker3:
-          image: confluentinc/cp-kafka:7.4.1
-          platform: linux/amd64
-          hostname: kafkabroker3
-          container_name: kafkabroker3
-          ports:
-            - "9094:9094"
-          environment:
-            KAFKA_PROCESS_ROLES: broker,controller
-            KAFKA_NODE_ID: 3
-            KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafkabroker1:9093,2@kafkabroker2:9093,3@kafkabroker3:9093
-            KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9094,CONTROLLER://0.0.0.0:9095
-            KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafkabroker3:9094
-            KAFKA_LOG_DIRS: /var/lib/kafka/data
-            KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
-            KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 3
-            KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 2
-            CLUSTER_ID: D1QB5MB8QLml357eGLuJNg
-            KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT
-            KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER

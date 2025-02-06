@@ -5,6 +5,8 @@ services:
     platform: linux/amd64
     hostname: kafkabroker1
     container_name: kafkabroker1
+    networks:
+      - kafka-network
     ports:
       - "9092:9092"
     environment:
@@ -25,6 +27,8 @@ services:
     platform: linux/amd64
     hostname: kafkabroker2
     container_name: kafkabroker2
+    networks:
+      - kafka-network
     ports:
       - "9093:9093"
     environment:
@@ -45,6 +49,8 @@ services:
     platform: linux/amd64
     hostname: kafkabroker3
     container_name: kafkabroker3
+    networks:
+      - kafka-network
     ports:
       - "9094:9094"
     environment:
@@ -59,3 +65,9 @@ services:
       CLUSTER_ID: D1QB5MB8QLml357eGLuJNg
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+
+
+networks:
+  kafka-network:
+    name: kafka-network  # Explicitly set the network name
+    driver: bridge
