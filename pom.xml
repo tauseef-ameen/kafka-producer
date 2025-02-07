@@ -33,8 +33,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-docker-compose</artifactId>
         </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui -->
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
@@ -172,8 +170,10 @@
                                     <run>
                                         <network>kafka-network</network>
                                         <env>
-                                            <KAFKA_BOOTSTRAP_SERVERS>kafkabroker1:9092, kafkabroker2:9093,
-                                                kafkabroker3:9094
+                                            <KAFKA_BOOTSTRAP_SERVERS>
+                                                kafkabroker1:29092,
+                                                kafkabroker2:29093,
+                                                kafkabroker3:29094
                                             </KAFKA_BOOTSTRAP_SERVERS>
                                         </env>
                                     </run>
