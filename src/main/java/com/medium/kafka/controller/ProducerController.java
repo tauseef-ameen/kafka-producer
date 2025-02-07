@@ -31,7 +31,7 @@ public class ProducerController {
             (@RequestBody BookCatalogEvent bookCatalogEvent) throws JsonProcessingException {
         log.info("sendBookCatalogEvent via approach1: {}", bookCatalogEvent);
         kafkaProducerService.sendBookEvent_Approach1(bookCatalogEvent);
-        log.info("After message sent in Async way approach 1: Message sent successfully");
+        log.info("Message sent successfully via /v1/book api");
         return ResponseEntity.status(HttpStatus.CREATED).body(bookCatalogEvent);
 
     }
@@ -42,7 +42,7 @@ public class ProducerController {
             throws JsonProcessingException, ExecutionException, InterruptedException, TimeoutException {
         log.info("sendBookCatalogEvent via approach2: {}", bookCatalogEvent);
         kafkaProducerService.sendBookEvent_Approach2(bookCatalogEvent);
-        log.info("After message sent in sync way approach 2: Message sent successfully");
+        log.info("Message sent successfully via /v2/book api");
         return ResponseEntity.status(HttpStatus.CREATED).body(bookCatalogEvent);
 
     }
@@ -52,7 +52,7 @@ public class ProducerController {
     public ResponseEntity<BookCatalogEvent> postBookCatalogEvent3(@RequestBody BookCatalogEvent bookCatalogEvent) throws JsonProcessingException {
         log.info("sendBookCatalogEvent via approach3: {}", bookCatalogEvent);
         kafkaProducerService.sendBookEvent_Approach3(bookCatalogEvent);
-        log.info("After message sent in Async way approach 3: Message sent successfully");
+        log.info("Message sent successfully via /v3/book api");
         return ResponseEntity.status(HttpStatus.CREATED).body(bookCatalogEvent);
 
     }
