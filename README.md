@@ -103,8 +103,5 @@ spring.topic.name=${TOPIC_NAME:order-event}
 spring.docker.compose.file=src/main/docker/KRaft-multi-broker.yml
 ```
 
----
-
 ## License
 This project is open-source and available under the **MIT License**.
-```
