@@ -2,7 +2,7 @@ package com.medium.kafka.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.medium.kafka.dto.BookCatalogEvent;
+import com.medium.kafka.dto.OrderEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -39,15 +39,15 @@ public class KafkaProducerService {
     public final ObjectMapper objectMapper;
 
     /**
-     * Send book event approach 1 completable future.
+     * Send order event approach 1 completable future.
      *
-     * @param bookCatalogEvent the book catalog event
+     * @param orderEvent the order catalog event
      * @return the completable future
      * @throws JsonProcessingException the json processing exception
      */
-    public CompletableFuture<SendResult<Integer, String>> sendBookEvent_Approach1(BookCatalogEvent bookCatalogEvent) throws JsonProcessingException {
-        var key = bookCatalogEvent.eventId();
-        var value = objectMapper.writeValueAsString(bookCatalogEvent);
+    public CompletableFuture<SendResult<Integer, String>> sendOrderEventApproach1(OrderEvent orderEvent) throws JsonProcessingException {
+        var key = orderEvent.orderId();
+        var value = objectMapper.writeValueAsString(orderEvent);
 
         var future = kafkaTemplate.send(topicName, key, value);
         return future.whenComplete((sendResult, throwable) -> {
@@ -62,19 +62,19 @@ public class KafkaProducerService {
     // synchronous way of calling approach 2
 
     /**
-     * Send book event approach 2 send result.
+     * Send order event approach 2 send result.
      *
-     * @param bookCatalogEvent the book catalog event
+     * @param orderEvent the order catalog event
      * @return the send result
      * @throws JsonProcessingException the json processing exception
      * @throws ExecutionException      the execution exception
      * @throws InterruptedException    the interrupted exception
      * @throws TimeoutException        the timeout exception
      */
-    public SendResult<Integer, String> sendBookEvent_Approach2(BookCatalogEvent bookCatalogEvent)
+    public SendResult<Integer, String> sendOrderEventApproach2(OrderEvent orderEvent)
             throws JsonProcessingException, ExecutionException, InterruptedException, TimeoutException {
-        var key = bookCatalogEvent.eventId();
-        var value = objectMapper.writeValueAsString(bookCatalogEvent);
+        var key = orderEvent.orderId();
+        var value = objectMapper.writeValueAsString(orderEvent);
 
         var result = kafkaTemplate.send(topicName, key, value).get(3, TimeUnit.SECONDS);
         handleSuccess(result, key);
@@ -84,16 +84,16 @@ public class KafkaProducerService {
 
 
     /**
-     * Send book event approach 3 completable future using producerRecord.
+     * Send order event approach 3 completable future using producerRecord.
      *
-     * @param bookCatalogEvent the book catalog event
+     * @param orderEvent the order catalog event
      * @return the completable future
      * @throws JsonProcessingException the json processing exception
      */
-    public CompletableFuture<SendResult<Integer, String>> sendBookEvent_Approach3(BookCatalogEvent bookCatalogEvent)
+    public CompletableFuture<SendResult<Integer, String>> sendOrderEventApproach3(OrderEvent orderEvent)
             throws JsonProcessingException {
-        var key = bookCatalogEvent.eventId();
-        var value = objectMapper.writeValueAsString(bookCatalogEvent);
+        var key = orderEvent.orderId();
+        var value = objectMapper.writeValueAsString(orderEvent);
         log.info("Key is: {} and value is: {}", key, value);
         ProducerRecord<Integer, String> producerRecord = new ProducerRecord<>(topicName, key, value);
 
