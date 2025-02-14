@@ -1,0 +1,15 @@
+networks:
+  kafka-network:
+    name: kafka-network
+    driver: bridge
+
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    networks:
+      - kafka-network
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INIT_DATABASE: kafka_messages
